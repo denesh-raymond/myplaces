@@ -1,4 +1,4 @@
-import 'package:myplaces/services/firebase_constants.dart' as Constants;
+import 'package:myplaces/services/firebase/firebase_constants.dart' as Constants;
 
 /// A user's favourite place
 class Place {
