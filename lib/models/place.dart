@@ -34,4 +34,9 @@ class Place {
       Constants.FIELD_PRICE: price,
     };
   }
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }

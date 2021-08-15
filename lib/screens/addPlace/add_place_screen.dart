@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myplaces/screens/addPlace/add_place_controller.dart';
+import 'package:myplaces/screens/addPlace/add_place_controller.dart';
+import 'package:myplaces/screens/addPlace/add_place_controller.dart';
 
 class AddPlaceScreen extends StatelessWidget {
   static const String route = '/add_place';
 
-  final List<int> _ratings = <int>[1, 2, 3, 4, 5];
-  final List<String> _prices = <String>['\$', '\$\$', '\$\$\$'];
+  final AddPlaceController _controller = Get.put<AddPlaceController>(AddPlaceController());
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ class AddPlaceScreen extends StatelessWidget {
     return Container(
       height: 200.0,
       child: CachedNetworkImage(
-        imageUrl: 'https://picsum.photos/600/480',
+        imageUrl: _controller.imageUrl,
         placeholder: (context, url) => Center(child: CircularProgressIndicator()),
         errorWidget: (context, url, error) => Icon(Icons.error),
       ),
@@ -54,6 +57,7 @@ class AddPlaceScreen extends StatelessWidget {
 
   Widget _renderNameField() {
     return TextField(
+      controller: _controller.nameController,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         hintText: 'Name',
@@ -62,34 +66,47 @@ class AddPlaceScreen extends StatelessWidget {
   }
 
   Widget _renderRatingField() {
-    return DropdownButton<int>(
-      items: _ratings.map((int rating) => DropdownMenuItem<int>(
-                value: rating,
-                child: Text(rating.toString()),
-              )).toList(),
-      onChanged: (_) {},
-      hint: Text('Rating'),
+    return Obx(
+      () => DropdownButton<int>(
+        value: _controller.currentRating.value,
+        items: _controller.ratings
+            .map((int rating) => DropdownMenuItem<int>(
+                  value: rating,
+                  child: Text(rating.toString()),
+                ))
+            .toList(),
+        onChanged: (rating) => _controller.currentRating.value = rating!,
+        hint: Text('Rating'),
+      ),
     );
   }
 
   Widget _renderPriceField() {
-    return DropdownButton<String>(
-      items: _prices.map((String price) => DropdownMenuItem<String>(
-                value: price,
-                child: Text(price),
-              )).toList(),
-      onChanged: (_) {},
-      hint: Text('Price'),
+    return Obx(
+      () => DropdownButton<String>(
+        value: _controller.currentPrice.value,
+        items: _controller.prices.map((String price) => DropdownMenuItem<String>(
+                  value: price,
+                  child: Text(price),
+                )).toList(),
+        onChanged: (price) => _controller.currentPrice.value = price!,
+        hint: Text('Price'),
+      ),
     );
   }
 
   Widget _renderAddButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => Navigator.of(context).pop(),
+      onPressed: () => _savePlace(),
       child: Text('Add'),
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 16.0),
       ),
     );
+  }
+
+  void _savePlace() {
+    _controller.savePlace();
+    Get.back();
   }
 }
