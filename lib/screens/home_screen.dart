@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myplaces/screens/add_place_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,13 +13,13 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Container(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _openAddPlaceScreen(context),
+        onPressed: () => _openAddPlaceScreen(),
         child: Icon(Icons.add),
       ),
     );
   }
 
-  void _openAddPlaceScreen(BuildContext context) {
-    Navigator.pushNamed(context, AddPlaceScreen.route);
+  void _openAddPlaceScreen() {
+    Get.toNamed(AddPlaceScreen.route);
   }
 }
