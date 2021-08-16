@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:myplaces/models/place.dart';
 import 'package:myplaces/screens/addPlace/add_place_screen.dart';
 import 'package:myplaces/screens/home/home_controller.dart';
+import 'package:myplaces/utils/styles.dart';
+import 'package:myplaces/views/place_list_item.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String route = '/home';
@@ -12,10 +14,13 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Styles.white,
       appBar: AppBar(
         title: Text('My Places'),
       ),
-      body: _renderPlaces(),
+      body: SafeArea(
+        child: _renderPlaces(),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openAddPlaceScreen(),
         child: Icon(Icons.add),
@@ -26,10 +31,8 @@ class HomeScreen extends StatelessWidget {
   Widget _renderPlaces() {
     return Obx(
       () => ListView.separated(
-        itemBuilder: (_, index) {
-          Place place = _controller.places[index];
-          return Text(place.name);
-        },
+        padding: const EdgeInsets.all(16.0),
+        itemBuilder: (_, index) => PlaceListItem(place: _controller.places[index]),
         separatorBuilder: (_, __) => SizedBox(height: 16.0),
         itemCount: _controller.places.length,
       ),

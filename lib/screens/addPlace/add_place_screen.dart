@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myplaces/screens/addPlace/add_place_controller.dart';
-import 'package:myplaces/screens/addPlace/add_place_controller.dart';
-import 'package:myplaces/screens/addPlace/add_place_controller.dart';
+import 'package:myplaces/views/cached_image.dart';
 
 class AddPlaceScreen extends StatelessWidget {
   static const String route = '/add_place';
@@ -45,14 +43,7 @@ class AddPlaceScreen extends StatelessWidget {
   }
 
   Widget _renderImage() {
-    return Container(
-      height: 200.0,
-      child: CachedNetworkImage(
-        imageUrl: _controller.imageUrl,
-        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-      ),
-    );
+    return CachedImage(imageUrl: _controller.imageUrl);
   }
 
   Widget _renderNameField() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myplaces/screens/addPlace/add_place_screen.dart';
 import 'package:myplaces/screens/home/home_screen.dart';
+import 'package:myplaces/utils/styles.dart';
 
 class App extends StatelessWidget {
   @override
@@ -14,7 +15,7 @@ class App extends StatelessWidget {
       ],
       title: 'My Places',
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
+        primarySwatch: Styles.primarySwatch,
       ),
     );
   }
